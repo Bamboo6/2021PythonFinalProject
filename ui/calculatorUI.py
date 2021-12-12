@@ -15,151 +15,155 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QGridLayout, QPushButton, QSizePolicy,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QPushButton,
+    QSizePolicy, QTextBrowser, QVBoxLayout, QWidget)
 
-class Ui_Form(object):
-    def setupUi(self, Form):
-        if not Form.objectName():
-            Form.setObjectName(u"Form")
-        Form.resize(338, 240)
-        Form.setMinimumSize(QSize(0, 0))
-        self.verticalLayout = QVBoxLayout(Form)
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        if not MainWindow.objectName():
+            MainWindow.setObjectName(u"MainWindow")
+        MainWindow.resize(338, 263)
+        MainWindow.setMinimumSize(QSize(0, 0))
+        self.verticalLayout = QVBoxLayout(MainWindow)
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.textEdit = QTextEdit(Form)
-        self.textEdit.setObjectName(u"textEdit")
-        self.textEdit.setEnabled(True)
-        self.textEdit.setMaximumSize(QSize(16777215, 70))
+        self.textBrowser = QTextBrowser(MainWindow)
+        self.textBrowser.setObjectName(u"textBrowser")
 
-        self.verticalLayout.addWidget(self.textEdit)
+        self.verticalLayout.addWidget(self.textBrowser)
+
+        self.label = QLabel(MainWindow)
+        self.label.setObjectName(u"label")
+
+        self.verticalLayout.addWidget(self.label)
 
         self.gridLayout = QGridLayout()
         self.gridLayout.setObjectName(u"gridLayout")
-        self.pushButton_AC = QPushButton(Form)
-        self.pushButton_AC.setObjectName(u"pushButton_AC")
+        self.pushButton_ac = QPushButton(MainWindow)
+        self.pushButton_ac.setObjectName(u"pushButton_ac")
 
-        self.gridLayout.addWidget(self.pushButton_AC, 0, 0, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_ac, 0, 0, 1, 1)
 
-        self.pushButton_18 = QPushButton(Form)
-        self.pushButton_18.setObjectName(u"pushButton_18")
+        self.pushButton_del = QPushButton(MainWindow)
+        self.pushButton_del.setObjectName(u"pushButton_del")
 
-        self.gridLayout.addWidget(self.pushButton_18, 0, 1, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_del, 0, 1, 1, 1)
 
-        self.pushButton_17 = QPushButton(Form)
-        self.pushButton_17.setObjectName(u"pushButton_17")
+        self.pushButton_pow = QPushButton(MainWindow)
+        self.pushButton_pow.setObjectName(u"pushButton_pow")
 
-        self.gridLayout.addWidget(self.pushButton_17, 0, 2, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_pow, 0, 2, 1, 1)
 
-        self.pushButton_divide = QPushButton(Form)
+        self.pushButton_divide = QPushButton(MainWindow)
         self.pushButton_divide.setObjectName(u"pushButton_divide")
 
         self.gridLayout.addWidget(self.pushButton_divide, 0, 3, 1, 1)
 
-        self.pushButton_7 = QPushButton(Form)
+        self.pushButton_7 = QPushButton(MainWindow)
         self.pushButton_7.setObjectName(u"pushButton_7")
 
         self.gridLayout.addWidget(self.pushButton_7, 1, 0, 1, 1)
 
-        self.pushButton_8 = QPushButton(Form)
+        self.pushButton_8 = QPushButton(MainWindow)
         self.pushButton_8.setObjectName(u"pushButton_8")
 
         self.gridLayout.addWidget(self.pushButton_8, 1, 1, 1, 1)
 
-        self.pushButton_9 = QPushButton(Form)
+        self.pushButton_9 = QPushButton(MainWindow)
         self.pushButton_9.setObjectName(u"pushButton_9")
 
         self.gridLayout.addWidget(self.pushButton_9, 1, 2, 1, 1)
 
-        self.pushButton_multiply = QPushButton(Form)
+        self.pushButton_multiply = QPushButton(MainWindow)
         self.pushButton_multiply.setObjectName(u"pushButton_multiply")
 
         self.gridLayout.addWidget(self.pushButton_multiply, 1, 3, 1, 1)
 
-        self.pushButton_4 = QPushButton(Form)
+        self.pushButton_4 = QPushButton(MainWindow)
         self.pushButton_4.setObjectName(u"pushButton_4")
 
         self.gridLayout.addWidget(self.pushButton_4, 2, 0, 1, 1)
 
-        self.pushButton_5 = QPushButton(Form)
+        self.pushButton_5 = QPushButton(MainWindow)
         self.pushButton_5.setObjectName(u"pushButton_5")
 
         self.gridLayout.addWidget(self.pushButton_5, 2, 1, 1, 1)
 
-        self.pushButton_6 = QPushButton(Form)
+        self.pushButton_6 = QPushButton(MainWindow)
         self.pushButton_6.setObjectName(u"pushButton_6")
 
         self.gridLayout.addWidget(self.pushButton_6, 2, 2, 1, 1)
 
-        self.pushButton_subtract = QPushButton(Form)
+        self.pushButton_subtract = QPushButton(MainWindow)
         self.pushButton_subtract.setObjectName(u"pushButton_subtract")
 
         self.gridLayout.addWidget(self.pushButton_subtract, 2, 3, 1, 1)
 
-        self.pushButton_1 = QPushButton(Form)
+        self.pushButton_1 = QPushButton(MainWindow)
         self.pushButton_1.setObjectName(u"pushButton_1")
 
         self.gridLayout.addWidget(self.pushButton_1, 3, 0, 1, 1)
 
-        self.pushButton_2 = QPushButton(Form)
+        self.pushButton_2 = QPushButton(MainWindow)
         self.pushButton_2.setObjectName(u"pushButton_2")
 
         self.gridLayout.addWidget(self.pushButton_2, 3, 1, 1, 1)
 
-        self.pushButton_3 = QPushButton(Form)
+        self.pushButton_3 = QPushButton(MainWindow)
         self.pushButton_3.setObjectName(u"pushButton_3")
 
         self.gridLayout.addWidget(self.pushButton_3, 3, 2, 1, 1)
 
-        self.pushButton_plus = QPushButton(Form)
+        self.pushButton_plus = QPushButton(MainWindow)
         self.pushButton_plus.setObjectName(u"pushButton_plus")
 
         self.gridLayout.addWidget(self.pushButton_plus, 3, 3, 1, 1)
 
-        self.pushButton_0 = QPushButton(Form)
+        self.pushButton_0 = QPushButton(MainWindow)
         self.pushButton_0.setObjectName(u"pushButton_0")
 
         self.gridLayout.addWidget(self.pushButton_0, 4, 0, 1, 2)
 
-        self.pushButton_point = QPushButton(Form)
+        self.pushButton_point = QPushButton(MainWindow)
         self.pushButton_point.setObjectName(u"pushButton_point")
 
         self.gridLayout.addWidget(self.pushButton_point, 4, 2, 1, 1)
 
-        self.pushButton_10 = QPushButton(Form)
-        self.pushButton_10.setObjectName(u"pushButton_10")
+        self.pushButton_equal = QPushButton(MainWindow)
+        self.pushButton_equal.setObjectName(u"pushButton_equal")
 
-        self.gridLayout.addWidget(self.pushButton_10, 4, 3, 1, 1)
+        self.gridLayout.addWidget(self.pushButton_equal, 4, 3, 1, 1)
 
 
         self.verticalLayout.addLayout(self.gridLayout)
 
 
-        self.retranslateUi(Form)
-        self.pushButton_AC.clicked.connect(self.textEdit.clear)
+        self.retranslateUi(MainWindow)
+        self.pushButton_ac.clicked.connect(self.label.clear)
 
-        QMetaObject.connectSlotsByName(Form)
+        QMetaObject.connectSlotsByName(MainWindow)
     # setupUi
 
-    def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.pushButton_AC.setText(QCoreApplication.translate("Form", u"AC", None))
-        self.pushButton_18.setText(QCoreApplication.translate("Form", u"\u00b1", None))
-        self.pushButton_17.setText(QCoreApplication.translate("Form", u"%", None))
-        self.pushButton_divide.setText(QCoreApplication.translate("Form", u"\u00f7", None))
-        self.pushButton_7.setText(QCoreApplication.translate("Form", u"7", None))
-        self.pushButton_8.setText(QCoreApplication.translate("Form", u"8", None))
-        self.pushButton_9.setText(QCoreApplication.translate("Form", u"9", None))
-        self.pushButton_multiply.setText(QCoreApplication.translate("Form", u"\u00d7", None))
-        self.pushButton_4.setText(QCoreApplication.translate("Form", u"4", None))
-        self.pushButton_5.setText(QCoreApplication.translate("Form", u"5", None))
-        self.pushButton_6.setText(QCoreApplication.translate("Form", u"6", None))
-        self.pushButton_subtract.setText(QCoreApplication.translate("Form", u"\uff0d", None))
-        self.pushButton_1.setText(QCoreApplication.translate("Form", u"1", None))
-        self.pushButton_2.setText(QCoreApplication.translate("Form", u"2", None))
-        self.pushButton_3.setText(QCoreApplication.translate("Form", u"3", None))
-        self.pushButton_plus.setText(QCoreApplication.translate("Form", u"\uff0b", None))
-        self.pushButton_0.setText(QCoreApplication.translate("Form", u"0", None))
-        self.pushButton_point.setText(QCoreApplication.translate("Form", u".", None))
-        self.pushButton_10.setText(QCoreApplication.translate("Form", u"=", None))
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Calculator", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"TextLabel", None))
+        self.pushButton_ac.setText(QCoreApplication.translate("MainWindow", u"AC", None))
+        self.pushButton_del.setText(QCoreApplication.translate("MainWindow", u"Del", None))
+        self.pushButton_pow.setText(QCoreApplication.translate("MainWindow", u"^", None))
+        self.pushButton_divide.setText(QCoreApplication.translate("MainWindow", u"\u00f7", None))
+        self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"7", None))
+        self.pushButton_8.setText(QCoreApplication.translate("MainWindow", u"8", None))
+        self.pushButton_9.setText(QCoreApplication.translate("MainWindow", u"9", None))
+        self.pushButton_multiply.setText(QCoreApplication.translate("MainWindow", u"\u00d7", None))
+        self.pushButton_4.setText(QCoreApplication.translate("MainWindow", u"4", None))
+        self.pushButton_5.setText(QCoreApplication.translate("MainWindow", u"5", None))
+        self.pushButton_6.setText(QCoreApplication.translate("MainWindow", u"6", None))
+        self.pushButton_subtract.setText(QCoreApplication.translate("MainWindow", u"\uff0d", None))
+        self.pushButton_1.setText(QCoreApplication.translate("MainWindow", u"1", None))
+        self.pushButton_2.setText(QCoreApplication.translate("MainWindow", u"2", None))
+        self.pushButton_3.setText(QCoreApplication.translate("MainWindow", u"3", None))
+        self.pushButton_plus.setText(QCoreApplication.translate("MainWindow", u"\uff0b", None))
+        self.pushButton_0.setText(QCoreApplication.translate("MainWindow", u"0", None))
+        self.pushButton_point.setText(QCoreApplication.translate("MainWindow", u".", None))
+        self.pushButton_equal.setText(QCoreApplication.translate("MainWindow", u"=", None))
     # retranslateUi
 
