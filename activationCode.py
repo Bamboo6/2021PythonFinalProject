@@ -19,12 +19,15 @@ code_length = 4
 
 # 根据概率随机生成一个字符
 def random_char():
-    cha = ""
     # 依据概率随机数字或字母
-    choice_type = np.random.choice([digits, lower_letters, upper_letters], p=[0.2, 0.4, 0.4])
-    cha += random.choice(choice_type)
-    # cha += string.ascii_letters[random.randint(0, 25)]
-    # print(choice_type)
+    # cha = ""
+    # choice_type = np.random.choice([digits, lower_letters, upper_letters], p=[0.2, 0.4, 0.4])
+    # cha += random.choice(choice_type)
+
+    choice_type = random.choices(population=[digits, lower_letters, upper_letters],
+                                 weights=[0.2, 0.4, 0.4])
+    cha = ""
+    cha += random.choice("".join(choice_type))
     return cha
 
 
@@ -54,7 +57,7 @@ def get_code(n):
 
 def get_all_code(n):
     all_code = []
-    test_dict = {}
+    # test_dict = {}
     i = 0
     while i < n:
         temp = get_code(code_length)
@@ -69,7 +72,6 @@ def get_all_code(n):
         #     test_dict[temp] = "1"
         if temp not in all_code:
             i += 1
-        # i += 1
             all_code.append(temp)
             # print("-".join(all_code))
         else:
@@ -80,8 +82,8 @@ def get_all_code(n):
     # return "\n".join(getCode(codeLength) for i in range(n))
     # return all_code
 
-
-print(get_all_code(1000))
+get_all_code(10000)
+# print(get_all_code(1000))
 
 end = time.perf_counter()
 print(end - start)
