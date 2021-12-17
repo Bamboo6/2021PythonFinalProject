@@ -1,43 +1,12 @@
 class Student:
     def __init__(self):
-        # self.stu_info = {"姓名": "1",
-        #                  "年龄": "",
-        #                  "Python 成绩": ""
-        #                  }
         self.stu_dict = {}
-        # {
-        #     "students": {
-        #         "11": {}
-        #     },
-        #     "teachers": {
-        #         "3333"
-        #     }
-        #
-        # }
-        # self.stu_dict["students"]["11"]["age"]
-        # self.stu_dict["113123"] = {
-        #     "age": 11,
-        #
-        # }
-        # {
-        #     "11": {
-        #         age: 11
-        #     },
-        #     "22": {
-        #         age: 12
-        #     }
-        # }
 
     def insert_info(self):
-        # stu_info = {"姓名": "",
-        #             "年龄": "",
-        #             "Python 成绩": ""
-        #             }
         while True:
             stu_id = input("请输入学号：")
             if stu_id in self.stu_dict:
                 print("学号已存在")
-            # self.insert_info()
             else:
                 name = input("请输入姓名：")
                 age = input("请输入年龄：")
@@ -48,24 +17,81 @@ class Student:
                                          }
                 break
 
-            # stu_info["姓名"] = name
-            # stu_info["年龄"] = age
-            # stu_info["Python 成绩"] = py_score
+    def del_info(self):
+        while True:
+            stu_id = input("请输入学号：")
+            if stu_id not in self.stu_dict:
+                print("学号不存在")
+            else:
+                del self.stu_dict[stu_id]
+                break
 
+    def alter_info(self):
+        while True:
+            stu_id = input("请输入学号：")
+            if stu_id not in self.stu_dict:
+                print("学号不存在")
+            else:
+                print("请选择需要修改的信息")
+                print("1.学号")
+                print("2.姓名")
+                print("3.年龄")
+                print("4.Python 成绩")
+                print("5.所有信息")
+                while True:
+                    opt = eval(input("请选择需要修改的项目："))
+                    if opt != 1 and opt != 2 and opt != 3 and opt != 4 and opt != 5:
+                        print("输入的选项有误！")
+                    else:
+                        if opt == 1:
+                            while True:
+                                new_stu_id = input("请输入新学号")
+                                if new_stu_id not in self.stu_dict:
+                                    print("学号已存在")
+                                else:
+                                    self.stu_dict[new_stu_id] = self.stu_dict.pop([stu_id])
+                                    break
+                            break
+                        elif opt == 2:
+                            name = input("请输入姓名：")
+                            self.stu_dict[stu_id] = {"姓名": name}
+                            break
+                        elif opt == 3:
+                            age = input("请输入年龄:")
+                            self.stu_dict[stu_id] = {"年龄": age}
+                            break
+                        elif opt == 4:
+                            py_score = input("请输入 Python 成绩：")
+                            self.stu_dict[stu_id] = {"Python 成绩": py_score}
+                            break
+                        elif opt == 5:
+                            while True:
+                                stu_id = input("请输入学号：")
+                                if stu_id not in self.stu_dict:
+                                    print("学号不存在")
+                                elif stu_id in self.stu_dict:
+                                    name = input("请输入姓名：")
+                                    age = input("请输入年龄：")
+                                    py_score = input("请输入 Python 成绩：")
+                                    self.stu_dict[stu_id] = {"姓名": name,
+                                                             "年龄": age,
+                                                             "Python 成绩": py_score
+                                                             }
+                                    break
+                            break
+            break
 
-# for i in students:
-#     if stu_id == i['stu_id']:
-#         print("该学号已经存在")
-#         return
-#     else:
-#         self.stu_info["name"] = name
-#         self.stu_info["age"] = age
-#         self.stu_info["stu_id"] = stu_id
-#         self.stu_info["py_score"] = py_score
-# temp.append(self.stu_info)
+    def where_info(self):
+        while True:
+            stu_id = input("请输入学号：")
+            if stu_id not in self.stu_dict:
+                print("学号不存在")
+            else:
+                print(self.stu_dict[stu_id])
+                break
 
-# def get_info(self, opt):
-# return self.stu_info[opt]
+    def all_info(self):
+        print(self.stu_dict)
 
 
 def menu():
@@ -78,14 +104,34 @@ def menu():
     print(" 5:遍历学生的信息")
     print(" 6:退出系统")
     print("-" * 30)
-    select = eval(input("请输入操作："))
-    return select
+    while True:
+        select = eval(input("请输入操作："))
+        if 1 <= select <= 6:
+            return select
+        else:
+            print("输入的选项有误！")
 
 
 # print(Student().get_info("name"))
-s = Student()
-s.insert_info()
-s.insert_info()
-print(s.stu_dict)
-# if __name__ == "__main__":
-#     menu()
+# s = Student()
+# s.insert_info()
+# s.insert_info()
+# print(s.stu_dict)
+if __name__ == "__main__":
+
+    s = Student()
+    while True:
+        opt = menu()
+        if opt == 1:
+            s.insert_info()
+        elif opt == 2:
+            s.del_info()
+        elif opt == 3:
+            s.alter_info()
+        elif opt == 4:
+            s.where_info()
+        elif opt == 5:
+            s.all_info()
+        elif opt == 6:
+            break
+
