@@ -118,20 +118,18 @@ def menu():
 # s.insert_info()
 # print(s.stu_dict)
 if __name__ == "__main__":
-
     s = Student()
     while True:
-        opt = menu()
-        if opt == 1:
+        menu = menu()
+        if menu == 1:
             s.insert_info()
-        elif opt == 2:
+        elif menu == 2:
             s.del_info()
-        elif opt == 3:
+        elif menu == 3:
             s.alter_info()
-        elif opt == 4:
+        elif menu == 4:
             s.where_info()
-        elif opt == 5:
+        elif menu == 5:
             s.all_info()
-        elif opt == 6:
+        elif menu == 6:
             break
-
