@@ -50,61 +50,66 @@ class Calculator(QMainWindow, Ui_MainWindow):
         # 获取临时区内容与当前输入区内容
         text = self.lineEdit.text()
         temp = self.label.text()
-        # 运算操作
+        # 运算操作字典
         ops = {"+": (lambda x, y: x + y),
                "-": (lambda x, y: x - y),
                "×": (lambda x, y: x * y),
                "÷": (lambda x, y: x / y),
                "^": (lambda x, y: x ** y),
                }
+        # 若临时区与输入区皆不为空则进行运算
         if temp != '' and text != '':
+            # 删除临时区的空格以及运算符
+            # 获取临时区数值并转换为十进制属性以确保运算精度
             temp_value = Decimal(temp[:-1].replace(' ', ''))
+            # 获取临时区运算符
             temp_operator = temp[len(temp) - 1]
+            # 获取输入区数值并转换为十进制属性以确保运算精度
             text = Decimal(text)
+            # 运算结果
             result = ops[temp_operator](temp_value, text)
-            # join_values = str(temp + text).replace(' ', '').replace('÷', '/').replace('×', '*').replace('^', '**')
-            # result = eval(join_values)
-            # result = Decimal(result).quantize(Decimal('0.00000000'))
-            # result = float(Decimal(result))
-            # result = re.sub(r"0*$", "", str(result))
+            # 结果超出长度后转换为科学计数法
             if len(str(result)) >= 11:
                 result = "%e" % result
+            # 临时区置空
             self.label.setText('')
+            # 将结果返回到输入区
             self.lineEdit.setText(str(result))
 
-    # def clearRepeat(self):
-    #     text = str(self.lineEdit.text())
-    #     text = text.replace(',', '.').replace('+', '').replace('/', '').replace('*', '').replace('--', '-')
-    #     return self.lineEdit.setText(text.replace('..', '.'))
-
+    # 删除按钮事件，删除输入区一个字符
     def delete(self):
         text = self.lineEdit.text()
         if text != '':
             values = text[:-1]
             self.lineEdit.setText(values)
 
+    # 运算符按钮事件
     def set_operations(self, operator):
         text = self.lineEdit.text()
         temp = self.label.text()
+        # 若临时区与输入区有内容则直接进行运算
         if temp != '' and text != '':
-            operation = str(temp + text).replace(' ', '').replace('÷', '/').replace('×', '*').replace('^', '**')
-            result = eval(operation)
-            self.label.setText(str(result) + ' ' + operator)
+            self.equal()
+            self.label.setText(self.lineEdit.text() + ' ' + operator)
             self.lineEdit.setText('')
+        # 若输入区不为空，则将输入区内容与运算符置入临时区
         elif text != '':
             self.label.setText(text + ' ' + operator)
             self.lineEdit.setText('')
+        # 若临时区不为空，则修改运算符
         elif temp != '':
             temp = temp[:-1].replace(' ', '')
             self.label.setText(temp + ' ' + operator)
 
 
 if __name__ == "__main__":
+    # 高分屏适配
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
     QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
     QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-    # QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.Round)
+
     app = QApplication()
+    # 引入字体
     QtGui.QFontDatabase.addApplicationFont('ui/PingFang.ttf')
     ui = Calculator()
     sys.exit(app.exec())
