@@ -17,14 +17,29 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Imitation iOS Calculator</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="rc_calculator.qrc">
+    <normaloff>:/img/apple_calculator_icon.png</normaloff>:/img/apple_calculator_icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color:#000000;</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <property name="styleSheet">
-    <string notr="true">font-family:&quot;PingFang SC&quot;;</string>
+    <string notr="true">QLineEdit {
+	font-family:&quot;PingFang SC&quot;;
+}
+QLabel {
+	font-family:&quot;PingFang SC&quot;;
+}
+QPushButton {
+	border-radius:35px;
+	border: 8px solid transparent;
+	font-family:&quot;PingFang SC&quot;;
+}
+</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
@@ -142,7 +157,9 @@ QPushButton:pressed {
 	color: #000000;
 	font:18pt;
 	border-radius:35px;
+	border: 8px solid transparent;
 	background-color: #a5a5a5;
+	padding-right:3px;
 }
 QPushButton:hover {
 	background-color: #d9d9d9;
@@ -153,7 +170,17 @@ QPushButton:pressed {
 </string>
         </property>
         <property name="text">
-         <string>Del</string>
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="rc_calculator.qrc">
+          <normaloff>:/img/backspace.png</normaloff>:/img/backspace.png</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>35</width>
+          <height>35</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -171,7 +198,7 @@ QPushButton:pressed {
 	font:25pt;
 	border-radius:35px;
 	background-color: #a5a5a5;
-	padding-top:12px;
+	padding-top: 7px;
 }
 QPushButton:hover {
 	background-color: #d9d9d9;
@@ -655,6 +682,8 @@ QPushButton:pressed {
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="rc_calculator.qrc"/>
+ </resources>
  <connections/>
 </ui>

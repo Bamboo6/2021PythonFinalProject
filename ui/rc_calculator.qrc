@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="img">
+    <file>backspace.png</file>
+    <file>apple_calculator_icon.png</file>
+  </qresource>
+</RCC>

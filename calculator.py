@@ -2,16 +2,17 @@ import sys
 from qt_core import *
 from ui.ui_calculator import Ui_MainWindow
 from decimal import *
-import re
 
 
 class Calculator(QMainWindow, Ui_MainWindow):
     def __init__(self):
+        # 初始化显示界面
         super(Calculator, self).__init__()
         # self.setWindowFlags(Qt.CustomizeWindowHint)
         self.setupUi(self)
         self.show()
 
+        # 绑定按钮事件
         self.pushButton_0.clicked.connect(lambda: self.button_event(0))
         self.pushButton_1.clicked.connect(lambda: self.button_event(1))
         self.pushButton_2.clicked.connect(lambda: self.button_event(2))
@@ -31,29 +32,31 @@ class Calculator(QMainWindow, Ui_MainWindow):
         self.pushButton_multiply.clicked.connect(lambda: self.set_operations("×"))
         self.pushButton_divide.clicked.connect(lambda: self.set_operations("÷"))
         self.pushButton_pow.clicked.connect(lambda: self.set_operations("^"))
-
+        # 设置输入区无焦点
         self.lineEdit.setFocusPolicy(Qt.NoFocus)
 
+    # 数字按钮事件
     def button_event(self, value):
         numbers = self.lineEdit.text()
         self.lineEdit.setText(numbers + str(value))
-        # self.clearRepeat()
 
+    # 清除按钮事件
     def all_clean(self):
         self.label.setText('')
         self.lineEdit.setText('')
-        # self.lineEdit.setFocus()
 
+    # 等于按钮事件
     def equal(self):
+        # 获取临时区内容与当前输入区内容
         text = self.lineEdit.text()
         temp = self.label.text()
+        # 运算操作
         ops = {"+": (lambda x, y: x + y),
                "-": (lambda x, y: x - y),
                "×": (lambda x, y: x * y),
                "÷": (lambda x, y: x / y),
                "^": (lambda x, y: x ** y),
                }
-
         if temp != '' and text != '':
             temp_value = Decimal(temp[:-1].replace(' ', ''))
             temp_operator = temp[len(temp) - 1]
@@ -68,7 +71,6 @@ class Calculator(QMainWindow, Ui_MainWindow):
                 result = "%e" % result
             self.label.setText('')
             self.lineEdit.setText(str(result))
-        # self.lineEdit.setFocus()
 
     # def clearRepeat(self):
     #     text = str(self.lineEdit.text())
@@ -80,7 +82,6 @@ class Calculator(QMainWindow, Ui_MainWindow):
         if text != '':
             values = text[:-1]
             self.lineEdit.setText(values)
-        # self.lineEdit.setFocus()
 
     def set_operations(self, operator):
         text = self.lineEdit.text()
@@ -96,10 +97,13 @@ class Calculator(QMainWindow, Ui_MainWindow):
         elif temp != '':
             temp = temp[:-1].replace(' ', '')
             self.label.setText(temp + ' ' + operator)
-        # self.lineEdit.setFocus()
 
 
 if __name__ == "__main__":
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
+    QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
+    # QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.Round)
     app = QApplication()
     QtGui.QFontDatabase.addApplicationFont('ui/PingFang.ttf')
     ui = Calculator()

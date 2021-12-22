@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QLineEdit,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
     QStatusBar, QVBoxLayout, QWidget)
+import rc_calculator_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,10 +26,24 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(315, 550)
         MainWindow.setMinimumSize(QSize(315, 550))
+        icon = QIcon()
+        icon.addFile(u":/img/apple_calculator_icon.png", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"background-color:#000000;")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.centralwidget.setStyleSheet(u"font-family:\"PingFang SC\";")
+        self.centralwidget.setStyleSheet(u"QLineEdit {\n"
+"	font-family:\"PingFang SC\";\n"
+"}\n"
+"QLabel {\n"
+"	font-family:\"PingFang SC\";\n"
+"}\n"
+"QPushButton {\n"
+"	border-radius:35px;\n"
+"	border: 8px solid transparent;\n"
+"	font-family:\"PingFang SC\";\n"
+"}\n"
+"")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout_1 = QVBoxLayout()
@@ -102,7 +117,9 @@ class Ui_MainWindow(object):
 "	color: #000000;\n"
 "	font:18pt;\n"
 "	border-radius:35px;\n"
+"	border: 8px solid transparent;\n"
 "	background-color: #a5a5a5;\n"
+"	padding-right:3px;\n"
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: #d9d9d9;\n"
@@ -111,6 +128,10 @@ class Ui_MainWindow(object):
 "	background-color: #d9d9d9;\n"
 "}\n"
 "")
+        icon1 = QIcon()
+        icon1.addFile(u":/img/backspace.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.pushButton_del.setIcon(icon1)
+        self.pushButton_del.setIconSize(QSize(35, 35))
 
         self.gridLayout.addWidget(self.pushButton_del, 0, 1, 1, 1)
 
@@ -122,7 +143,7 @@ class Ui_MainWindow(object):
 "	font:25pt;\n"
 "	border-radius:35px;\n"
 "	background-color: #a5a5a5;\n"
-"	padding-top:12px;\n"
+"	padding-top: 7px;\n"
 "}\n"
 "QPushButton:hover {\n"
 "	background-color: #d9d9d9;\n"
@@ -461,10 +482,10 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Imitation iOS Calculator", None))
         self.label.setText("")
         self.pushButton_ac.setText(QCoreApplication.translate("MainWindow", u"AC", None))
-        self.pushButton_del.setText(QCoreApplication.translate("MainWindow", u"Del", None))
+        self.pushButton_del.setText("")
         self.pushButton_pow.setText(QCoreApplication.translate("MainWindow", u"^", None))
         self.pushButton_divide.setText(QCoreApplication.translate("MainWindow", u"\u00f7", None))
         self.pushButton_7.setText(QCoreApplication.translate("MainWindow", u"7", None))
