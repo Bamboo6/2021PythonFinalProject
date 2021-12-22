@@ -111,6 +111,9 @@ QPushButton {
 	setAlignment:AlignRight;
 }</string>
         </property>
+        <property name="text">
+         <string>0</string>
+        </property>
        </widget>
       </item>
      </layout>

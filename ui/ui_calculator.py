@@ -484,6 +484,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Imitation iOS Calculator", None))
         self.label.setText("")
+        self.lineEdit.setText(QCoreApplication.translate("MainWindow", u"0", None))
         self.pushButton_ac.setText(QCoreApplication.translate("MainWindow", u"AC", None))
         self.pushButton_del.setText("")
         self.pushButton_pow.setText(QCoreApplication.translate("MainWindow", u"^", None))

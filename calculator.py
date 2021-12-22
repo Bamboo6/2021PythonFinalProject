@@ -23,7 +23,7 @@ class Calculator(QMainWindow, Ui_MainWindow):
         self.pushButton_7.clicked.connect(lambda: self.button_event(7))
         self.pushButton_8.clicked.connect(lambda: self.button_event(8))
         self.pushButton_9.clicked.connect(lambda: self.button_event(9))
-        self.pushButton_point.clicked.connect(lambda: self.button_event('.'))
+        self.pushButton_point.clicked.connect(lambda: self.point())
         self.pushButton_ac.clicked.connect(lambda: self.all_clean())
         self.pushButton_equal.clicked.connect(lambda: self.equal())
         self.pushButton_del.clicked.connect(lambda: self.delete())
@@ -34,16 +34,28 @@ class Calculator(QMainWindow, Ui_MainWindow):
         self.pushButton_pow.clicked.connect(lambda: self.set_operations("^"))
         # 设置输入区无焦点
         self.lineEdit.setFocusPolicy(Qt.NoFocus)
+        self.label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.lineEdit.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
 
-    # 数字按钮事件
+    # 数字按钮
     def button_event(self, value):
-        numbers = self.lineEdit.text()
-        self.lineEdit.setText(numbers + str(value))
+        text = self.lineEdit.text()
+        if text == "0":
+            text = text[:-1]
+        self.lineEdit.setText(text + str(value))
 
-    # 清除按钮事件
+    # 小数点按钮
+    # Decimal 会自动处理 1. + 2. 这种错误输入
+    def point(self):
+        text = self.lineEdit.text()
+        if "." not in text:
+            self.lineEdit.setText(text + ".")
+
+    # 清除按钮
     def all_clean(self):
-        self.label.setText('')
-        self.lineEdit.setText('')
+        self.label.setText("")
+        self.lineEdit.setText("0")
+        self.reset_font()
 
     # 等于按钮事件
     def equal(self):
@@ -67,39 +79,66 @@ class Calculator(QMainWindow, Ui_MainWindow):
             # 获取输入区数值并转换为十进制属性以确保运算精度
             text = Decimal(text)
             # 运算结果
-            result = ops[temp_operator](temp_value, text)
-            # 结果超出长度后转换为科学计数法
-            if len(str(result)) >= 11:
-                result = "%e" % result
-            # 临时区置空
-            self.label.setText('')
-            # 将结果返回到输入区
-            self.lineEdit.setText(str(result))
+            try:
+                result = ops[temp_operator](temp_value, text)
+                if len(str(result)) >= 11:
+                    result = "%e" % result
+                    # 结果超出长度后转换为科学计数法
+                    if len(str(result)) > 11:
+                        self.lineEdit.setStyleSheet(u"QLineEdit{\n"
+                                                    "	color:#ffffff;\n"
+                                                    "	font: 28pt;\n"
+                                                    "	background:transparent;\n"
+                                                    "	border-width:0;\n"
+                                                    "	border-style:outset;\n"
+                                                    "	setAlignment:AlignRight;\n"
+                                                    "}")
+                # 临时区置空
+                self.label.setText("")
+                # 将结果返回到输入区
+                self.lineEdit.setText(str(result))
+            except DivisionByZero:
+                self.label.setText("")
+                self.lineEdit.setText("inf")
 
     # 删除按钮事件，删除输入区一个字符
     def delete(self):
+        self.reset_font()
         text = self.lineEdit.text()
-        if text != '':
-            values = text[:-1]
-            self.lineEdit.setText(values)
+        if text != "":
+            text = text[:-1]
+            self.lineEdit.setText(text)
+            if text == "":
+                self.lineEdit.setText("0")
 
     # 运算符按钮事件
     def set_operations(self, operator):
+        self.reset_font()
         text = self.lineEdit.text()
         temp = self.label.text()
         # 若临时区与输入区有内容则直接进行运算
-        if temp != '' and text != '':
+        if temp != "" and text != "":
             self.equal()
-            self.label.setText(self.lineEdit.text() + ' ' + operator)
+            self.label.setText(self.lineEdit.text() + " " + operator)
             self.lineEdit.setText('')
         # 若输入区不为空，则将输入区内容与运算符置入临时区
         elif text != '':
-            self.label.setText(text + ' ' + operator)
-            self.lineEdit.setText('')
+            self.label.setText(text + " " + operator)
+            self.lineEdit.setText("")
         # 若临时区不为空，则修改运算符
         elif temp != '':
-            temp = temp[:-1].replace(' ', '')
-            self.label.setText(temp + ' ' + operator)
+            temp = temp[:-1].replace(" ", "")
+            self.label.setText(temp + " " + operator)
+
+    def reset_font(self):
+        self.lineEdit.setStyleSheet(u"QLineEdit{\n"
+                                    "	color:#ffffff;\n"
+                                    "	font: 35pt;\n"
+                                    "	background:transparent;\n"
+                                    "	border-width:0;\n"
+                                    "	border-style:outset;\n"
+                                    "	setAlignment:AlignRight;\n"
+                                    "}")
 
 
 if __name__ == "__main__":
@@ -110,6 +149,6 @@ if __name__ == "__main__":
 
     app = QApplication()
     # 引入字体
-    QtGui.QFontDatabase.addApplicationFont('ui/PingFang.ttf')
+    QtGui.QFontDatabase.addApplicationFont("ui/PingFang.ttf")
     ui = Calculator()
     sys.exit(app.exec())
