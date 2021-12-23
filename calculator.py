@@ -11,7 +11,6 @@ class Calculator(QMainWindow, Ui_MainWindow):
         # self.setWindowFlags(Qt.CustomizeWindowHint)
         self.setupUi(self)
         self.show()
-
         # 绑定按钮事件
         self.pushButton_0.clicked.connect(lambda: self.button_event(0))
         self.pushButton_1.clicked.connect(lambda: self.button_event(1))
@@ -36,6 +35,12 @@ class Calculator(QMainWindow, Ui_MainWindow):
         self.lineEdit.setFocusPolicy(Qt.NoFocus)
         self.label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self.lineEdit.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
+        self.cal_init()
+
+    def cal_init(self):
+
+        # 重置输入区样式
+        self.reset_font()
 
     # 数字按钮
     def button_event(self, value):
@@ -53,9 +58,9 @@ class Calculator(QMainWindow, Ui_MainWindow):
 
     # 清除按钮
     def all_clean(self):
+        self.reset_font()
         self.label.setText("")
         self.lineEdit.setText("0")
-        self.reset_font()
 
     # 等于按钮事件
     def equal(self):
@@ -81,18 +86,24 @@ class Calculator(QMainWindow, Ui_MainWindow):
             # 运算结果
             try:
                 result = ops[temp_operator](temp_value, text)
-                if len(str(result)) >= 11:
+                result_list = str(result).split(".")
+                # 当结果包含小数点且不为科学计数法时保留7位小数
+                if "." in str(result):
+                    if "E" not in str(result):
+                        if len(result_list[1]) >= 7:
+                            result = result.quantize(Decimal('0.0000000'))
+                # 结果大于11位转换为科学计数法
+                if len(str(result)) > 11:
                     result = "%e" % result
                     # 结果超出长度后转换为科学计数法
-                    if len(str(result)) > 11:
-                        self.lineEdit.setStyleSheet(u"QLineEdit{\n"
-                                                    "	color:#ffffff;\n"
-                                                    "	font: 28pt;\n"
-                                                    "	background:transparent;\n"
-                                                    "	border-width:0;\n"
-                                                    "	border-style:outset;\n"
-                                                    "	setAlignment:AlignRight;\n"
-                                                    "}")
+                    self.lineEdit.setStyleSheet(u"QLineEdit{\n"
+                                                "	color:#ffffff;\n"
+                                                "	font: 28pt;\n"
+                                                "	background:transparent;\n"
+                                                "	border-width:0;\n"
+                                                "	border-style:outset;\n"
+                                                "	setAlignment:AlignRight;\n"
+                                                "}")
                 # 临时区置空
                 self.label.setText("")
                 # 将结果返回到输入区
@@ -105,6 +116,7 @@ class Calculator(QMainWindow, Ui_MainWindow):
     def delete(self):
         self.reset_font()
         text = self.lineEdit.text()
+        # 当输入区不为空时进行退格，若退格到最后一位则初始化为0
         if text != "":
             text = text[:-1]
             self.lineEdit.setText(text)
@@ -139,6 +151,22 @@ class Calculator(QMainWindow, Ui_MainWindow):
                                     "	border-style:outset;\n"
                                     "	setAlignment:AlignRight;\n"
                                     "}")
+
+    # def signum(self):
+    #     text = self.lineEdit.text()
+    #     if text[0] == "-":
+    #         self.lineEdit.setText(text[1:-1])
+    #     else:
+    #         self.lineEdit.setText("-"+text)
+
+    # def multifunction_button(self):
+    #     self.pushButton_pow
+    #     if QtGui.QMouseEvent.MouseButtonPress:
+    #         self.pushButton_pow.text("±")
+    #         self.pushButton_pow.clicked.connected(self.signum())
+    #     else:
+    #         self.pushButton_pow.text("^")
+    #         self.pushButton_pow.clicked.connected(self.set_operations("^"))
 
 
 if __name__ == "__main__":

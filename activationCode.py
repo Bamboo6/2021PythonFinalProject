@@ -1,9 +1,11 @@
+import os
 import random
 import string
 import sys
 
 from qt_core import *
 from ui.ui_activationCode import Ui_MainWindow
+from ui.ui_warn import Ui_WarnWindow
 
 
 # import time
@@ -16,6 +18,8 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
         self.setupUi(self)
         self.show()
 
+        # 警告窗口初始化
+        self.child_init = ChildWindow()
         # 生成小写字母
         self.lower_letters = string.ascii_lowercase
         # 生成大写字母
@@ -32,13 +36,23 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
         self.lower_letters_pr = int(self.lineEdit_low_letters.text())
         # 大写字母概率
         self.upper_letters_pr = int(self.lineEdit_up_letters.text())
+        # 生成数量
+        # self.num = int(self.lineEdit_num.text())
+        # 预览
         self.lineEdit_result.setText(self.get_code(self.code_length))
         # 绑定按钮事件
+        # self.pushButton_preview.clicked.connect(lambda: self.child_window())
         self.pushButton_preview.clicked.connect(lambda: self.preview())
-        self.pushButton_generate.clicked.connect(lambda: self.button_event(0))
+        self.pushButton_generate.clicked.connect(lambda: self.get_all_code())
         # 设置预览框无焦点
         self.lineEdit_result.setFocusPolicy(Qt.NoFocus)
         self.lineEdit_result.setAlignment(Qt.AlignHCenter)
+        self.lineEdit_num.setAlignment(Qt.AlignHCenter)
+        self.lineEdit_char.setAlignment(Qt.AlignHCenter)
+        self.lineEdit_up_letters.setAlignment(Qt.AlignHCenter)
+        self.lineEdit_low_letters.setAlignment(Qt.AlignHCenter)
+        self.lineEdit_digits.setAlignment(Qt.AlignHCenter)
+        self.lineEdit_part.setAlignment(Qt.AlignHCenter)
 
     # 根据概率随机生成一个字符
     def random_char(self):
@@ -49,15 +63,12 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
         cha += random.choice("".join(choice_type))
         return cha
 
+    # def child_window(self):
+    #     # 注意，这里的 child_window 不能定义成临时变量，必须定义成主窗口类MainWindow的成员变量，如果是临时变量，即前面没有self，那么子窗口只会闪一下，就会消失
+    #     self.child_init.show()
+
     def get_part_of_code(self, n):
-        # temp = ""
-        # for i in range(n):
-        #     # random.seed(random.choice())
-        #     result = np.random.choice([digits, letters], p=[0.2, 0.8])
-        #     temp = temp + random.choice(result)
-        # return temp
         return "".join(self.random_char() for _ in range(n))
-        # return (random_char() for _ in range(n))
 
     # 预览
     def preview(self):
@@ -65,72 +76,52 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
         self.lineEdit_result.setText(code)
 
     def get_code(self, n):
-        # 激活码单part长度
-        self.char_length = int(self.lineEdit_char.text())
-        # 激活码part数
-        self.code_length = int(self.lineEdit_part.text())
-        # 数字概率
-        self.digits_pr = int(self.lineEdit_digits.text())
-        # 小写字母概率
-        self.lower_letters_pr = int(self.lineEdit_low_letters.text())
-        # 大写字母概率
-        self.upper_letters_pr = int(self.lineEdit_up_letters.text())
-        code = "-".join(self.get_part_of_code(self.char_length) for _ in range(n))
-        # code = ""
-        # for i in range(n):
-        #     temp = get_part_of_code(4)
-        #     if i < (n-1):
-        #         code = code + temp + "-"
-        # else:
-        #     code = code + temp
-        # return code[:-1]
-        return code
-        # return (get_part_of_code(char_length) for _ in range(n))
-
-    def get_all_code(self, n):
-        all_code = []
-        # test_dict = {}
-        i = 0
-        while i < n:
-            temp = self.get_code(self.code_length)
-            # if temp in test_dict:
-            #     # i -= 1
-            #     print("``````")
-            #     print(test_dict)
-            #     print(temp)
-            #     print("---")
+        # 输入内容有误异常捕获
+        try:
+            # 激活码单part长度
+            self.char_length = int(self.lineEdit_char.text())
+            # 激活码part数
+            self.code_length = int(self.lineEdit_part.text())
+            # 数字概率
+            self.digits_pr = int(self.lineEdit_digits.text())
+            # 小写字母概率
+            self.lower_letters_pr = int(self.lineEdit_low_letters.text())
+            # 大写字母概率
+            self.upper_letters_pr = int(self.lineEdit_up_letters.text())
+            code = "-".join(self.get_part_of_code(self.char_length) for _ in range(n))
+            return code
+        except ValueError:
             # else:
-            #     i += 1
-            #     test_dict[temp] = "1"
-            if temp not in all_code:
-                i += 1
-                all_code.append(temp)
-                # print("-".join(all_code))
-            else:
-                print("-".join(all_code) + "-" + temp)
-                # i -= 1
-                print('重复的激活码: "' + temp + '"已剔除')
-        return '\n'.join(all_code)
-        # return "\n".join(getCode(codeLength) for i in range(n))
-        # return all_code
+            self.child_init.show()
 
-    # get_all_code(10)
-    # print(get_all_code(10))
+    def get_all_code(self):
+        try:
+            num = int(self.lineEdit_num.text())
+            all_code = []
+            # test_dict = {}
+            i = 0
+            while i < num:
+                temp = self.get_code(self.code_length)
+                if temp not in all_code:
+                    i += 1
+                    all_code.append(temp)
+                else:
+                    print("-".join(all_code) + "-" + temp)
+                    print('重复的激活码: "' + temp + '"已剔除')
+            with open("ActivationCode.txt", "w") as f:
+                f.write('\n'.join(all_code))
+            os.system("notepad ActivationCode.txt")
+        except ValueError:
+            self.child_init.show()
 
-    # end = time.perf_counter()
-    # print(end - start)
-    # code = ""
-    # for i in range(4):
-    #     temp = ""
-    #     for j in range(4):
-    #         p = np.array([0.2, 0.8])
-    #         result = np.random.choice([digits, letters], p=[0.2, 0.8])
-    #         temp = temp + random.choice(result)
-    #     if i < 3:
-    #         code = code + temp + "-"
-    #     else:
-    #         code = code + temp
-    # print(code)
+
+# 创建警告窗口类
+class ChildWindow(QMainWindow, Ui_WarnWindow):
+    def __init__(self):
+        super(ChildWindow, self).__init__()
+        # 引入警告窗口类
+        self.ui = Ui_WarnWindow()
+        self.ui.setupUi(self)
 
 
 if __name__ == "__main__":
