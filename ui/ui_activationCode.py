@@ -18,6 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
     QStatusBar, QVBoxLayout, QWidget)
+import rc_activation_code_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -25,6 +26,9 @@ class Ui_MainWindow(object):
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(260, 260)
         MainWindow.setMinimumSize(QSize(260, 260))
+        icon = QIcon()
+        icon.addFile(u":/img/random_logo.png", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         MainWindow.setStyleSheet(u"")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -72,26 +76,8 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_8)
 
-        self.horizontalLayout_9 = QHBoxLayout()
-        self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
-        self.verticalLayout_4 = QVBoxLayout()
-        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.label_4 = QLabel(self.centralwidget)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setMinimumSize(QSize(0, 15))
-        self.label_4.setMaximumSize(QSize(16777215, 15))
-        self.label_4.setAlignment(Qt.AlignCenter)
-
-        self.verticalLayout_4.addWidget(self.label_4)
-
-        self.lineEdit_low_letters = QLineEdit(self.centralwidget)
-        self.lineEdit_low_letters.setObjectName(u"lineEdit_low_letters")
-
-        self.verticalLayout_4.addWidget(self.lineEdit_low_letters)
-
-
-        self.horizontalLayout_9.addLayout(self.verticalLayout_4)
-
+        self.horizontalLayout = QHBoxLayout()
+        self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.verticalLayout_5 = QVBoxLayout()
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
         self.label_5 = QLabel(self.centralwidget)
@@ -108,7 +94,25 @@ class Ui_MainWindow(object):
         self.verticalLayout_5.addWidget(self.lineEdit_digits)
 
 
-        self.horizontalLayout_9.addLayout(self.verticalLayout_5)
+        self.horizontalLayout.addLayout(self.verticalLayout_5)
+
+        self.verticalLayout_4 = QVBoxLayout()
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.label_4 = QLabel(self.centralwidget)
+        self.label_4.setObjectName(u"label_4")
+        self.label_4.setMinimumSize(QSize(0, 15))
+        self.label_4.setMaximumSize(QSize(16777215, 15))
+        self.label_4.setAlignment(Qt.AlignCenter)
+
+        self.verticalLayout_4.addWidget(self.label_4)
+
+        self.lineEdit_low_letters = QLineEdit(self.centralwidget)
+        self.lineEdit_low_letters.setObjectName(u"lineEdit_low_letters")
+
+        self.verticalLayout_4.addWidget(self.lineEdit_low_letters)
+
+
+        self.horizontalLayout.addLayout(self.verticalLayout_4)
 
         self.verticalLayout_6 = QVBoxLayout()
         self.verticalLayout_6.setObjectName(u"verticalLayout_6")
@@ -126,10 +130,10 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.addWidget(self.lineEdit_up_letters)
 
 
-        self.horizontalLayout_9.addLayout(self.verticalLayout_6)
+        self.horizontalLayout.addLayout(self.verticalLayout_6)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_9)
+        self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.pushButton_preview = QPushButton(self.centralwidget)
         self.pushButton_preview.setObjectName(u"pushButton_preview")
@@ -191,10 +195,10 @@ class Ui_MainWindow(object):
         self.lineEdit_part.setText(QCoreApplication.translate("MainWindow", u"4", None))
         self.label.setText(QCoreApplication.translate("MainWindow", u"\u5355 \u90e8 \u5206 \u5b57 \u7b26 \u6570", None))
         self.lineEdit_char.setText(QCoreApplication.translate("MainWindow", u"4", None))
-        self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u5c0f\u5199\u5b57\u6bcd\u6743\u91cd", None))
-        self.lineEdit_low_letters.setText(QCoreApplication.translate("MainWindow", u"2", None))
         self.label_5.setText(QCoreApplication.translate("MainWindow", u"  \u6570 \u5b57 \u6743 \u91cd  ", None))
         self.lineEdit_digits.setText(QCoreApplication.translate("MainWindow", u"1", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"\u5c0f\u5199\u5b57\u6bcd\u6743\u91cd", None))
+        self.lineEdit_low_letters.setText(QCoreApplication.translate("MainWindow", u"2", None))
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"\u5927\u5199\u5b57\u6bcd\u6743\u91cd", None))
         self.lineEdit_up_letters.setText(QCoreApplication.translate("MainWindow", u"2", None))
         self.pushButton_preview.setText(QCoreApplication.translate("MainWindow", u"\u9884\u89c8", None))

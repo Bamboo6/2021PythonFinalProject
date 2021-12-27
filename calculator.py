@@ -8,7 +8,6 @@ class Calculator(QMainWindow, Ui_MainWindow):
     def __init__(self):
         # 初始化显示界面
         super(Calculator, self).__init__()
-        # self.setWindowFlags(Qt.CustomizeWindowHint)
         self.setupUi(self)
         self.show()
         # 绑定按钮事件
@@ -33,13 +32,9 @@ class Calculator(QMainWindow, Ui_MainWindow):
         self.pushButton_pow.clicked.connect(lambda: self.set_operations("^"))
         # 设置输入区无焦点
         self.lineEdit.setFocusPolicy(Qt.NoFocus)
+        # 设置临时区与输入区右对齐并水平居中
         self.label.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
         self.lineEdit.setAlignment(Qt.AlignRight | Qt.AlignVCenter)
-        self.cal_init()
-
-    def cal_init(self):
-
-        # 重置输入区样式
         self.reset_font()
 
     # 数字按钮
@@ -50,7 +45,7 @@ class Calculator(QMainWindow, Ui_MainWindow):
         self.lineEdit.setText(text + str(value))
 
     # 小数点按钮
-    # Decimal 会自动处理 1. + 2. 这种错误输入
+    # Decimal 会自动处理 1. + 2. 这种错误输入，未再不作处理
     def point(self):
         text = self.lineEdit.text()
         if "." not in text:
@@ -58,13 +53,16 @@ class Calculator(QMainWindow, Ui_MainWindow):
 
     # 清除按钮
     def all_clean(self):
+        # 重置输入区样式
         self.reset_font()
+        # 置空临时区内容
         self.label.setText("")
+        # 输入区归 0
         self.lineEdit.setText("0")
 
     # 等于按钮事件
     def equal(self):
-        # 获取临时区内容与当前输入区内容
+        # 获取输入区与临时区内容
         text = self.lineEdit.text()
         temp = self.label.text()
         # 运算操作字典
@@ -95,7 +93,7 @@ class Calculator(QMainWindow, Ui_MainWindow):
                 # 结果大于11位转换为科学计数法
                 if len(str(result)) > 11:
                     result = "%e" % result
-                    # 结果超出长度后转换为科学计数法
+                    # 修改输入区样式便于完整显示内容
                     self.lineEdit.setStyleSheet(u"QLineEdit{\n"
                                                 "	color:#ffffff;\n"
                                                 "	font: 28pt;\n"
@@ -109,12 +107,15 @@ class Calculator(QMainWindow, Ui_MainWindow):
                 # 将结果返回到输入区
                 self.lineEdit.setText(str(result))
             except DivisionByZero:
+                # 若除数为负数则置空临时区并在输入区提示infinite
                 self.label.setText("")
                 self.lineEdit.setText("inf")
 
     # 删除按钮事件，删除输入区一个字符
     def delete(self):
+        # 重置输入区样式
         self.reset_font()
+        # 获取输入区内容
         text = self.lineEdit.text()
         # 当输入区不为空时进行退格，若退格到最后一位则初始化为0
         if text != "":
@@ -125,7 +126,9 @@ class Calculator(QMainWindow, Ui_MainWindow):
 
     # 运算符按钮事件
     def set_operations(self, operator):
+        # 重置输入区样式
         self.reset_font()
+        # 获取输入区与临时区内容
         text = self.lineEdit.text()
         temp = self.label.text()
         # 若临时区与输入区有内容则直接进行运算
@@ -142,6 +145,7 @@ class Calculator(QMainWindow, Ui_MainWindow):
             temp = temp[:-1].replace(" ", "")
             self.label.setText(temp + " " + operator)
 
+    # 重置输入区样式
     def reset_font(self):
         self.lineEdit.setStyleSheet(u"QLineEdit{\n"
                                     "	color:#ffffff;\n"
@@ -152,29 +156,8 @@ class Calculator(QMainWindow, Ui_MainWindow):
                                     "	setAlignment:AlignRight;\n"
                                     "}")
 
-    # def signum(self):
-    #     text = self.lineEdit.text()
-    #     if text[0] == "-":
-    #         self.lineEdit.setText(text[1:-1])
-    #     else:
-    #         self.lineEdit.setText("-"+text)
-
-    # def multifunction_button(self):
-    #     self.pushButton_pow
-    #     if QtGui.QMouseEvent.MouseButtonPress:
-    #         self.pushButton_pow.text("±")
-    #         self.pushButton_pow.clicked.connected(self.signum())
-    #     else:
-    #         self.pushButton_pow.text("^")
-    #         self.pushButton_pow.clicked.connected(self.set_operations("^"))
-
 
 if __name__ == "__main__":
-    # 高分屏适配
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
-    QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-
     app = QApplication()
     # 引入字体
     QtGui.QFontDatabase.addApplicationFont("ui/PingFang.ttf")

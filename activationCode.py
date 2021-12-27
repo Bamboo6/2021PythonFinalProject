@@ -30,22 +30,20 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
         self.char_length = int(self.lineEdit_char.text())
         # 激活码part数
         self.code_length = int(self.lineEdit_part.text())
-        # 数字概率
+        # 数字权重
         self.digits_pr = int(self.lineEdit_digits.text())
-        # 小写字母概率
+        # 小写字母权重
         self.lower_letters_pr = int(self.lineEdit_low_letters.text())
-        # 大写字母概率
+        # 大写字母权重
         self.upper_letters_pr = int(self.lineEdit_up_letters.text())
-        # 生成数量
-        # self.num = int(self.lineEdit_num.text())
         # 预览
         self.lineEdit_result.setText(self.get_code(self.code_length))
         # 绑定按钮事件
-        # self.pushButton_preview.clicked.connect(lambda: self.child_window())
         self.pushButton_preview.clicked.connect(lambda: self.preview())
         self.pushButton_generate.clicked.connect(lambda: self.get_all_code())
         # 设置预览框无焦点
         self.lineEdit_result.setFocusPolicy(Qt.NoFocus)
+        # 设置输入框水平居中
         self.lineEdit_result.setAlignment(Qt.AlignHCenter)
         self.lineEdit_num.setAlignment(Qt.AlignHCenter)
         self.lineEdit_char.setAlignment(Qt.AlignHCenter)
@@ -56,25 +54,18 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
 
     # 根据概率随机生成一个字符
     def random_char(self):
-        # 依据概率随机数字或字母
+        # 依据权重随机数字或字母
         choice_type = random.choices(population=[self.digits, self.lower_letters, self.upper_letters],
                                      weights=[self.digits_pr, self.lower_letters_pr, self.upper_letters_pr])
         cha = ""
         cha += random.choice("".join(choice_type))
         return cha
 
-    # def child_window(self):
-    #     # 注意，这里的 child_window 不能定义成临时变量，必须定义成主窗口类MainWindow的成员变量，如果是临时变量，即前面没有self，那么子窗口只会闪一下，就会消失
-    #     self.child_init.show()
-
+    # 获取一个部分的激活码
     def get_part_of_code(self, n):
         return "".join(self.random_char() for _ in range(n))
 
-    # 预览
-    def preview(self):
-        code = self.get_code(self.code_length)
-        self.lineEdit_result.setText(code)
-
+    # 获取一条完整激活码
     def get_code(self, n):
         # 输入内容有误异常捕获
         try:
@@ -82,23 +73,29 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
             self.char_length = int(self.lineEdit_char.text())
             # 激活码part数
             self.code_length = int(self.lineEdit_part.text())
-            # 数字概率
+            # 数字权重
             self.digits_pr = int(self.lineEdit_digits.text())
-            # 小写字母概率
+            # 小写字母权重
             self.lower_letters_pr = int(self.lineEdit_low_letters.text())
-            # 大写字母概率
+            # 大写字母权重
             self.upper_letters_pr = int(self.lineEdit_up_letters.text())
             code = "-".join(self.get_part_of_code(self.char_length) for _ in range(n))
             return code
         except ValueError:
-            # else:
+            # 输入内容有误弹出警告窗口
             self.child_init.show()
 
+    # 预览
+    def preview(self):
+        code = self.get_code(self.code_length)
+        self.lineEdit_result.setText(code)
+
+    # 生产大量激活码
     def get_all_code(self):
         try:
+            # 获取生成数量
             num = int(self.lineEdit_num.text())
             all_code = []
-            # test_dict = {}
             i = 0
             while i < num:
                 temp = self.get_code(self.code_length)
@@ -108,10 +105,12 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
                 else:
                     print("-".join(all_code) + "-" + temp)
                     print('重复的激活码: "' + temp + '"已剔除')
+            # 生成完成后将结果写入记事本并打开
             with open("ActivationCode.txt", "w") as f:
                 f.write('\n'.join(all_code))
             os.system("notepad ActivationCode.txt")
         except ValueError:
+            # 生成数量输入有误则弹出警告窗口
             self.child_init.show()
 
 
@@ -125,11 +124,6 @@ class ChildWindow(QMainWindow, Ui_WarnWindow):
 
 
 if __name__ == "__main__":
-    # 高分屏适配
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
-    QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-
     app = QApplication()
     # 引入字体
     QtGui.QFontDatabase.addApplicationFont('ui/PingFang.ttf')
