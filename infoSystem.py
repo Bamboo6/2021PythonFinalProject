@@ -5,24 +5,34 @@ class Student:
     def __init__(self):
         self.stu_dict = {}
 
+    # 新增信息
     def insert_info(self):
         while True:
             print("-----P.S.返回上一层请输入exit-----")
             stu_id = input("请输入学号：")
+            # 直到输入exit才跳出新增信息方法，便于一次添加多条信息
             if stu_id == "exit":
                 break
             elif stu_id in self.stu_dict:
-                print("学号已存在")
+                print("-----学号已存在！-----")
             else:
-                name = input("请输入姓名：")
+                name = input("请输入姓名：").replace(" ", "")
+
                 if name == "exit":
                     break
-                age = input("请输入年龄：")
+                elif name == "":
+                    name = "null"
+                age = input("请输入年龄：").replace(" ", "")
                 if age == "exit":
                     break
-                score = input("请输入成绩：")
+                elif age == "":
+                    age = "null"
+                score = input("请输入成绩：").replace(" ", "")
                 if score == "exit":
                     break
+                elif score == "":
+                    score = "null"
+                # 将新增学生信息以学号为键名，其他内容封装为一个新的字典作为为键值存入字典
                 self.stu_dict[stu_id] = {"姓名": name,
                                          "年龄": age,
                                          "成绩": score
@@ -30,18 +40,7 @@ class Student:
 
     def del_info(self):
         while True:
-            print("-----P.S.返回上一层请输入exit-----")
-            stu_id = input("请输入学号：")
-            if stu_id == "exit":
-                break
-            elif stu_id not in self.stu_dict:
-                print("学号不存在！（返回上一层请输入exit）")
-            else:
-                del self.stu_dict[stu_id]
-                break
-
-    def alter_info(self):
-        while True:
+            # 直到输入exit才跳出删除信息方法，便于一次删除多条信息
             print("-----P.S.返回上一层请输入exit-----")
             stu_id = input("请输入学号：")
             if stu_id == "exit":
@@ -49,57 +48,78 @@ class Student:
             elif stu_id not in self.stu_dict:
                 print("学号不存在！")
             else:
-                print("请选择需要修改的信息")
-                print("1.学号")
-                print("2.姓名")
-                print("3.年龄")
-                print("4.成绩")
-                print("5.所有信息")
-                while True:
-                    try:
-                        opt = int(input("请选择需要修改的项目："))
-                        if opt < 1 or opt > 5:
-                            print("输入的选项有误！")
-                        else:
-                            if opt == 1:
-                                while True:
-                                    new_stu_id = input("请输入新学号")
-                                    if new_stu_id not in self.stu_dict:
-                                        print("学号已存在")
-                                    else:
-                                        self.stu_dict[new_stu_id] = self.stu_dict.pop([stu_id])
-                                        break
+                del self.stu_dict[stu_id]
+
+    def alter_menu(self, stu_id):
+        print(stu_id, self.stu_dict[stu_id])
+        print("请选择需要修改的信息")
+        print("1.学号")
+        print("2.姓名")
+        print("3.年龄")
+        print("4.成绩")
+        while True:
+            # 输入内容错误异常捕获
+            try:
+                opt = int(input("请选择需要修改的项目："))
+                if opt < 1 or opt > 4:
+                    print("-----输入的选项有误！-----")
+                else:
+                    # 修改学号
+                    if opt == 1:
+                        while True:
+                            new_stu_id = input("请输入新学号：").replace(" ", "")
+                            if new_stu_id == "exit":
                                 break
-                            elif opt == 2:
-                                name = input("请输入姓名：")
-                                self.stu_dict[stu_id] = {"姓名": name}
+                            elif new_stu_id in self.stu_dict:
+                                print("-----学号已存在！-----")
+                            elif new_stu_id == "":
+                                print("-----学号不可为空！-----")
+                            else:
+                                self.stu_dict[new_stu_id] = self.stu_dict[stu_id]
+                                del self.stu_dict[stu_id]
+                                stu_id = new_stu_id
+                                print(stu_id, self.stu_dict[stu_id])
                                 break
-                            elif opt == 3:
-                                age = input("请输入年龄:")
-                                self.stu_dict[stu_id] = {"年龄": age}
-                                break
-                            elif opt == 4:
-                                score = input("请输入成绩：")
-                                self.stu_dict[stu_id] = {"成绩": score}
-                                break
-                            elif opt == 5:
-                                while True:
-                                    stu_id = input("请输入学号：")
-                                    if stu_id not in self.stu_dict:
-                                        print("学号不存在")
-                                    elif stu_id in self.stu_dict:
-                                        name = input("请输入姓名：")
-                                        age = input("请输入年龄：")
-                                        score = input("请输入成绩：")
-                                        self.stu_dict[stu_id] = {"姓名": name,
-                                                                 "年龄": age,
-                                                                 "成绩": score
-                                                                 }
-                                        break
-                                break
-                    except ValueError:
-                        print("输入的内容有误！")
-            break
+                        break
+                    # 修改姓名
+                    elif opt == 2:
+                        name = input("请输入姓名：").replace(" ", "")
+                        if name == "":
+                            name = "null"
+                        self.stu_dict[stu_id] = {"姓名": name}
+                        print(stu_id, self.stu_dict[stu_id])
+                        break
+                    # 修改年龄
+                    elif opt == 3:
+                        age = input("请输入年龄:").replace(" ", "")
+                        if age == "":
+                            age = "null"
+                        self.stu_dict[stu_id] = {"年龄": age}
+                        print(stu_id, self.stu_dict[stu_id])
+                        break
+                    # 修改成绩
+                    elif opt == 4:
+                        score = input("请输入成绩：").replace(" ", "")
+                        if score == "":
+                            score = "null"
+                        self.stu_dict[stu_id] = {"成绩": score}
+                        print(stu_id, self.stu_dict[stu_id])
+                        break
+            except ValueError:
+                print("-----输入的内容有误！-----")
+
+    def alter_info(self):
+        while True:
+            # 直到输入exit才跳出修改信息方法，便于一次修改多条信息
+            print("-----P.S.返回上一层请输入exit-----")
+            stu_id = input("请输入学号：")
+            if stu_id == "exit":
+                break
+            elif stu_id not in self.stu_dict:
+                print("-----学号不存在！-----")
+            else:
+                self.alter_menu(stu_id)
+                break
 
     def where_info(self):
         while True:
@@ -110,7 +130,7 @@ class Student:
             elif stu_id == "exit":
                 break
             elif stu_id not in self.stu_dict:
-                print("学号不存在！")
+                print("-----学号不存在！-----")
             else:
                 print(self.stu_dict[stu_id])
 
@@ -120,13 +140,9 @@ class Student:
             # print(i)
             if len(info_output) == 0:
                 header = list(self.stu_dict[i].keys())
-                # if header:
                 header.insert(0, "学号")
                 header = "\t".join(header)
                 info_output.append(header)
-                # else:
-                #     info_output = ["系统无数据！"]
-                #     break
             if not self.stu_dict[i].values():
                 value = "null"
             else:
@@ -139,9 +155,8 @@ class Student:
     def all_info(self):
         if self.stu_dict:
             info_output = self.get_all_info()
-            # print("\n".join(info_output))
         else:
-            info_output = ["系统无数据！"]
+            info_output = ["-----系统无数据！-----"]
         with open("StuInfoSystem.txt", "w") as f:
             f.write('\n'.join(info_output))
         os.system("notepad StuInfoSystem.txt")
@@ -155,8 +170,8 @@ def menu():
     print("2:删除学生的信息")
     print("3:修改的信息")
     print("4:查询学生的信息")
-    print("5:输出所有学生的信息")
-    print("6:退出系统")
+    print("5:导出所有学生的信息")
+    print("0:退出系统")
     print("-" * 20)
     while True:
         try:
@@ -164,9 +179,9 @@ def menu():
             if 1 <= select <= 6:
                 return select
             else:
-                print("输入的选项有误！")
+                print("-----输入的选项有误！-----")
         except ValueError:
-            print("输入的内容有误！")
+            print("-----输入的内容有误！-----")
 
 
 if __name__ == "__main__":
@@ -183,5 +198,5 @@ if __name__ == "__main__":
             s.where_info()
         elif opt_main == 5:
             s.all_info()
-        elif opt_main == 6:
+        elif opt_main == 0:
             break
