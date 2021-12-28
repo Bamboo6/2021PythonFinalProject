@@ -13,11 +13,6 @@ class Warn(QMainWindow, Ui_WarnWindow):
 
 
 if __name__ == "__main__":
-    # 高分屏适配
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
-    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps)
-    QtGui.QGuiApplication.setHighDpiScaleFactorRoundingPolicy(Qt.HighDpiScaleFactorRoundingPolicy.PassThrough)
-
     app = QApplication()
     # 引入字体
     QtGui.QFontDatabase.addApplicationFont('ui/PingFang.ttf')

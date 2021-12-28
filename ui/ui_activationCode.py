@@ -18,7 +18,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHBoxLayout, QLabel, QLineEdit,
     QMainWindow, QMenuBar, QPushButton, QSizePolicy,
     QStatusBar, QVBoxLayout, QWidget)
-import rc_activation_code_rc
+import resource_rc
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -32,6 +32,16 @@ class Ui_MainWindow(object):
         MainWindow.setStyleSheet(u"")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.centralwidget.setStyleSheet(u"QLineEdit {\n"
+"	font-family:\"PingFang SC\";\n"
+"}\n"
+"QLabel {\n"
+"	font-family:\"PingFang SC\";\n"
+"}\n"
+"QPushButton {\n"
+"	font-family:\"PingFang SC\";\n"
+"}\n"
+"")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout_8 = QHBoxLayout()

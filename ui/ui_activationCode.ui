@@ -20,13 +20,25 @@
    <string>激活码生成器</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="rc_activation_code.qrc">
+   <iconset resource="resource.qrc">
     <normaloff>:/img/random_logo.png</normaloff>:/img/random_logo.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+	font-family:&quot;PingFang SC&quot;;
+}
+QLabel {
+	font-family:&quot;PingFang SC&quot;;
+}
+QPushButton {
+	font-family:&quot;PingFang SC&quot;;
+}
+</string>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_8">
@@ -269,7 +281,7 @@
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="rc_activation_code.qrc"/>
+  <include location="resource.qrc"/>
  </resources>
  <connections/>
 </ui>

@@ -2,15 +2,11 @@ import os
 import random
 import string
 import sys
-
 from qt_core import *
 from ui.ui_activationCode import Ui_MainWindow
 from ui.ui_warn import Ui_WarnWindow
 
 
-# import time
-
-# start = time.perf_counter()
 class ActivationCode(QMainWindow, Ui_MainWindow):
     def __init__(self):
         # 初始化显示界面
@@ -37,7 +33,7 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
         # 大写字母权重
         self.upper_letters_pr = int(self.lineEdit_up_letters.text())
         # 预览
-        self.lineEdit_result.setText(self.get_code(self.code_length))
+        self.lineEdit_result.setText(self.get_code())
         # 绑定按钮事件
         self.pushButton_preview.clicked.connect(lambda: self.preview())
         self.pushButton_generate.clicked.connect(lambda: self.get_all_code())
@@ -66,7 +62,7 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
         return "".join(self.random_char() for _ in range(n))
 
     # 获取一条完整激活码
-    def get_code(self, n):
+    def get_code(self):
         # 输入内容有误异常捕获
         try:
             # 激活码单part长度
@@ -79,7 +75,7 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
             self.lower_letters_pr = int(self.lineEdit_low_letters.text())
             # 大写字母权重
             self.upper_letters_pr = int(self.lineEdit_up_letters.text())
-            code = "-".join(self.get_part_of_code(self.char_length) for _ in range(n))
+            code = "-".join(self.get_part_of_code(self.char_length) for _ in range(self.code_length))
             return code
         except ValueError:
             # 输入内容有误弹出警告窗口
@@ -87,7 +83,7 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
 
     # 预览
     def preview(self):
-        code = self.get_code(self.code_length)
+        code = self.get_code()
         self.lineEdit_result.setText(code)
 
     # 生产大量激活码
@@ -97,18 +93,23 @@ class ActivationCode(QMainWindow, Ui_MainWindow):
             num = int(self.lineEdit_num.text())
             all_code = []
             i = 0
+            count_num = 0
             while i < num:
-                temp = self.get_code(self.code_length)
+                temp = self.get_code()
                 if temp not in all_code:
                     i += 1
                     all_code.append(temp)
                 else:
-                    print("-".join(all_code) + "-" + temp)
-                    print('重复的激活码: "' + temp + '"已剔除')
-            # 生成完成后将结果写入记事本并打开
-            with open("ActivationCode.txt", "w") as f:
-                f.write('\n'.join(all_code))
-            os.system("notepad ActivationCode.txt")
+                    count_num += 1
+                    # 重复的激活码太多则跳出
+                    if count_num >= 100:
+                        self.child_init.show()
+                        break
+            if count_num < 100:
+                # 生成完成后将结果写入记事本并打开
+                with open("ActivationCode.txt", "w") as f:
+                    f.write('\n'.join(all_code))
+                os.system("notepad ActivationCode.txt")
         except ValueError:
             # 生成数量输入有误则弹出警告窗口
             self.child_init.show()

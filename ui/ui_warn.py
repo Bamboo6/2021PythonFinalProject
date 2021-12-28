@@ -17,14 +17,23 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenuBar,
     QSizePolicy, QStatusBar, QVBoxLayout, QWidget)
+import resource_rc
 
 class Ui_WarnWindow(object):
     def setupUi(self, WarnWindow):
         if not WarnWindow.objectName():
             WarnWindow.setObjectName(u"WarnWindow")
-        WarnWindow.resize(225, 92)
+        WarnWindow.resize(202, 94)
+        icon = QIcon()
+        icon.addFile(u":/img/warn.png", QSize(), QIcon.Normal, QIcon.Off)
+        WarnWindow.setWindowIcon(icon)
         self.centralwidget = QWidget(WarnWindow)
         self.centralwidget.setObjectName(u"centralwidget")
+        self.centralwidget.setStyleSheet(u"QLabel {\n"
+"	font-family:\"PingFang SC\";\n"
+"	font-weight:bold;\n"
+"}\n"
+"")
         self.verticalLayout = QVBoxLayout(self.centralwidget)
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.label = QLabel(self.centralwidget)
@@ -36,7 +45,7 @@ class Ui_WarnWindow(object):
         WarnWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(WarnWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 225, 22))
+        self.menubar.setGeometry(QRect(0, 0, 202, 22))
         WarnWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(WarnWindow)
         self.statusbar.setObjectName(u"statusbar")

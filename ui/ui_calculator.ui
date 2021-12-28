@@ -20,7 +20,7 @@
    <string>Imitation iOS Calculator</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="rc_calculator.qrc">
+   <iconset resource="resource.qrc">
     <normaloff>:/img/apple_calculator_icon.png</normaloff>:/img/apple_calculator_icon.png</iconset>
   </property>
   <property name="styleSheet">
@@ -176,7 +176,7 @@ QPushButton:pressed {
          <string/>
         </property>
         <property name="icon">
-         <iconset resource="rc_calculator.qrc">
+         <iconset resource="resource.qrc">
           <normaloff>:/img/backspace.png</normaloff>:/img/backspace.png</iconset>
         </property>
         <property name="iconSize">
@@ -686,7 +686,7 @@ QPushButton:pressed {
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
  <resources>
-  <include location="rc_calculator.qrc"/>
+  <include location="resource.qrc"/>
  </resources>
  <connections/>
 </ui>

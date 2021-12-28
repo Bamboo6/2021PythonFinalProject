@@ -2,5 +2,7 @@
   <qresource prefix="img">
     <file>backspace.png</file>
     <file>apple_calculator_icon.png</file>
+    <file>warn.png</file>
+    <file>random_logo.png</file>
   </qresource>
 </RCC>
